@@ -16,7 +16,7 @@
         margin: 0;
         background: #0f172a;
         color: #e2e8f0;
-        padding: 24px;
+        padding: 20px;
       }
       .container {
         text-align: center;
@@ -33,14 +33,15 @@
       }
       .btn {
         display: inline-block;
-        padding: 14px 36px;
+        padding: 14px 32px;
         color: #fff;
         text-decoration: none;
-        border-radius: 10px;
-        font-size: 17px;
+        border-radius: 12px;
+        font-size: 16px;
         font-weight: 600;
         transition: background .2s, transform .2s, box-shadow .2s;
         cursor: pointer;
+        white-space: nowrap;
       }
       .btn-ziwei {
         background: #3b82f6;
@@ -59,6 +60,12 @@
         background: #047857;
         transform: translateY(-2px);
         box-shadow: 0 6px 18px rgba(5,150,105,.45);
+      }
+      @media (max-width: 480px) {
+        h1 { font-size: 34px; margin-bottom: 6px; }
+        p { font-size: 14px; margin-bottom: 28px; }
+        .btn-group { gap: 12px; }
+        .btn { padding: 13px 24px; font-size: 15px; width: 100%; max-width: 280px; text-align: center; }
       }
     </style>
   </head>
