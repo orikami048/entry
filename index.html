@@ -1,82 +1,376 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>入口</title>
-    <style>
-      * { box-sizing: border-box; }
-      body {
-        font-family: system-ui, -apple-system, sans-serif;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100vh;
-        margin: 0;
-        background: #0f172a;
-        color: #e2e8f0;
-        padding: 20px;
-      }
-      .container {
-        text-align: center;
-        max-width: 600px;
-        width: 100%;
-      }
-      h1 { font-size: 42px; margin: 0 0 8px; font-weight: 700; }
-      p { color: #94a3b8; margin: 0 0 36px; font-size: 16px; }
-      .btn-group {
-        display: flex;
-        gap: 16px;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-      .btn {
-        display: inline-block;
-        padding: 14px 32px;
-        color: #fff;
-        text-decoration: none;
-        border-radius: 12px;
-        font-size: 16px;
-        font-weight: 600;
-        transition: background .2s, transform .2s, box-shadow .2s;
-        cursor: pointer;
-        white-space: nowrap;
-      }
-      .btn-ziwei {
-        background: #3b82f6;
-        box-shadow: 0 4px 14px rgba(59,130,246,.35);
-      }
-      .btn-ziwei:hover {
-        background: #2563eb;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(59,130,246,.45);
-      }
-      .btn-fangji {
-        background: #059669;
-        box-shadow: 0 4px 14px rgba(5,150,105,.35);
-      }
-      .btn-fangji:hover {
-        background: #047857;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 18px rgba(5,150,105,.45);
-      }
-      @media (max-width: 480px) {
-        h1 { font-size: 34px; margin-bottom: 6px; }
-        p { font-size: 14px; margin-bottom: 28px; }
-        .btn-group { gap: 12px; }
-        .btn { padding: 13px 24px; font-size: 15px; width: 100%; max-width: 280px; text-align: center; }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="container">
-      <h1>入口</h1>
-      <p>Cloudflare Pages 部署测试</p>
-      <div class="btn-group">
-        <a class="btn btn-ziwei" href="https://ziwei-doushu-d4e.pages.dev">紫微斗数排盘</a>
-        <a class="btn btn-fangji" href="https://fangji-2oh.pages.dev/">药剂主页</a>
-      </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>国学数术与汉唐中医全息工作台 · 统一总入口</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22%200%20100%20100%22><text y=%22.9em%22 font-size=%2290%22>☯️</text></svg>">
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: rgba(18, 25, 41, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --gold-primary: #d4af37;
+      --gold-light: #fce183;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Segoe UI", "Microsoft YaHei", sans-serif;
+      min-height: 100vh;
+      background: var(--bg);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+        radial-gradient(circle at 85% 30%, rgba(212, 175, 55, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at 15% 70%, rgba(16, 185, 129, 0.08) 0%, transparent 40%);
+      color: var(--text-main);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      padding: 40px 20px 24px;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1080px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* 顶部标头 */
+    .brand-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(212, 175, 55, 0.12);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      color: var(--gold-light);
+      padding: 5px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      margin-bottom: 16px;
+      backdrop-filter: blur(8px);
+    }
+
+    h1 {
+      font-size: 38px;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      background: linear-gradient(135deg, #ffffff 25%, #fce183 70%, #d4af37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 12px;
+    }
+
+    .subtitle {
+      color: var(--text-muted);
+      font-size: 15px;
+      max-width: 640px;
+      margin: 0 auto 36px;
+      font-weight: 400;
+    }
+
+    /* 4大项目入口卡片网格 */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+      text-align: left;
+    }
+
+    .card {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 18px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.5);
+      transition: all 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: transparent;
+      transition: background 0.28s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 18px 40px -8px rgba(0, 0, 0, 0.7);
+    }
+
+    /* 1. 风水 (金/黄) */
+    .card-fengshui:hover {
+      border-color: rgba(212, 175, 55, 0.5);
+      box-shadow: 0 18px 40px -8px rgba(212, 175, 55, 0.25);
+    }
+    .card-fengshui::before { background: linear-gradient(90deg, #d4af37, #fce183); }
+
+    /* 2. 紫微 (紫/蓝) */
+    .card-ziwei:hover {
+      border-color: rgba(147, 51, 234, 0.5);
+      box-shadow: 0 18px 40px -8px rgba(147, 51, 234, 0.25);
+    }
+    .card-ziwei::before { background: linear-gradient(90deg, #8b5cf6, #3b82f6); }
+
+    /* 3. 八字 (青/朱) */
+    .card-bazi:hover {
+      border-color: rgba(56, 189, 248, 0.5);
+      box-shadow: 0 18px 40px -8px rgba(56, 189, 248, 0.25);
+    }
+    .card-bazi::before { background: linear-gradient(90deg, #0ea5e9, #6366f1); }
+
+    /* 4. 药剂 (翠绿) */
+    .card-fangji:hover {
+      border-color: rgba(16, 185, 129, 0.5);
+      box-shadow: 0 18px 40px -8px rgba(16, 185, 129, 0.25);
+    }
+    .card-fangji::before { background: linear-gradient(90deg, #10b981, #059669); }
+
+    /* 卡片内部元素 */
+    .card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .tag {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .tag-fengshui { background: rgba(212, 175, 55, 0.15); color: #fce183; border: 1px solid rgba(212, 175, 55, 0.3); }
+    .tag-ziwei { background: rgba(147, 51, 234, 0.15); color: #c084fc; border: 1px solid rgba(147, 51, 234, 0.3); }
+    .tag-bazi { background: rgba(56, 189, 248, 0.15); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.3); }
+    .tag-fangji { background: rgba(16, 185, 129, 0.15); color: #6ee7b7; border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    .card-title {
+      font-size: 19px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #fff;
+    }
+
+    .card-desc {
+      font-size: 12.5px;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 20px;
+      min-height: 40px;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 14px;
+      font-size: 12.5px;
+      font-weight: 600;
+    }
+
+    .open-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: gap 0.2s ease;
+    }
+    .card:hover .open-btn { gap: 8px; }
+
+    .card-fengshui .open-btn { color: #fce183; }
+    .card-ziwei .open-btn { color: #c084fc; }
+    .card-bazi .open-btn { color: #7dd3fc; }
+    .card-fangji .open-btn { color: #6ee7b7; }
+
+    .status-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      margin-right: 5px;
+    }
+
+    /* 快捷切换器栏 */
+    .quick-bar {
+      margin-top: 36px;
+      padding: 14px 20px;
+      background: rgba(15, 23, 42, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      font-size: 13px;
+    }
+    .quick-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      transition: color 0.2s;
+    }
+    .quick-link:hover { color: var(--gold-light); }
+
+    /* 页脚 */
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+    }
+
+    @media (max-width: 640px) {
+      body { padding: 24px 16px; }
+      h1 { font-size: 28px; }
+      .subtitle { font-size: 13.5px; margin-bottom: 24px; }
+      .grid { grid-template-columns: 1fr; gap: 14px; }
+      .card { padding: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- 顶部徽标 -->
+    <div class="brand-badge">
+      <span>☯️</span> 汉唐天纪 · 人纪 · 地纪全息数术工作台
     </div>
-  </body>
+
+    <!-- 主标题 -->
+    <h1>国学数术与中医全景工作台</h1>
+    <p class="subtitle">
+      一站式集成风水堪舆、紫微斗数、八字命理与经典经方药剂四大专业系统，点击即可直接进入对应工作台。
+    </p>
+
+    <!-- 4大核心入口卡片 -->
+    <div class="grid">
+      
+      <!-- 1. 风水 -->
+      <a class="card card-fengshui" href="https://orikami048.github.io/real-fengshui-db/" target="_blank" rel="noopener">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🧭</div>
+            <span class="tag tag-fengshui">玄空 · 八宅 · 罗盘</span>
+          </div>
+          <div class="card-title">实战风水与AI空间诊断</div>
+          <div class="card-desc">
+            360° 可交互真北旋转罗盘，天心十道精准立极，九宫飞星排盘，三元纳气与免费 AI 户型调理方案。
+          </div>
+        </div>
+        <div class="card-footer">
+          <span style="color: #94a3b8;"><span class="status-dot"></span>在线就绪</span>
+          <span class="open-btn">进入风水工作台 →</span>
+        </div>
+      </a>
+
+      <!-- 2. 紫微 -->
+      <a class="card card-ziwei" href="https://ziwei-doushu-d4e.pages.dev" target="_blank" rel="noopener">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🔮</div>
+            <span class="tag tag-ziwei">倪海夏正宗传承</span>
+          </div>
+          <div class="card-title">紫微斗数全息排盘</div>
+          <div class="card-desc">
+            纳音五行局正法起盘，14主星与12宫位全息格局推演，四化飞星流转，大限流年与事业财富健康深度解读。
+          </div>
+        </div>
+        <div class="card-footer">
+          <span style="color: #94a3b8;"><span class="status-dot"></span>在线就绪</span>
+          <span class="open-btn">进入紫微工作台 →</span>
+        </div>
+      </a>
+
+      <!-- 3. 八字 -->
+      <a class="card card-bazi" href="https://bazi-liuyao-database.pages.dev" target="_blank" rel="noopener">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">📜</div>
+            <span class="tag tag-bazi">四柱八字 · 六爻全息</span>
+          </div>
+          <div class="card-title">八字命理与六爻古籍工作台</div>
+          <div class="card-desc">
+            高精度四柱干支与大运排盘，十神五行旺衰量化，六爻神煞排演，融合四库古籍全息引证与中医五运六气。
+          </div>
+        </div>
+        <div class="card-footer">
+          <span style="color: #94a3b8;"><span class="status-dot"></span>双线部署</span>
+          <span class="open-btn">进入八字工作台 →</span>
+        </div>
+      </a>
+
+      <!-- 4. 药剂 -->
+      <a class="card card-fangji" href="https://fangji-2oh.pages.dev/" target="_blank" rel="noopener">
+        <div>
+          <div class="card-top">
+            <div class="card-icon">🌿</div>
+            <span class="tag tag-fangji">汉唐经方 · 391经典方</span>
+          </div>
+          <div class="card-title">汉唐经典方剂主页</div>
+          <div class="card-desc">
+            倪海夏经方本草与人纪心法，391首伤寒金匮经典方剂检索，配伍剂量增减透视，一键高清抓药单生成。
+          </div>
+        </div>
+        <div class="card-footer">
+          <span style="color: #94a3b8;"><span class="status-dot"></span>在线就绪</span>
+          <span class="open-btn">进入药剂工作台 →</span>
+        </div>
+      </a>
+
+    </div>
+
+    <!-- 底部快捷外链栏 -->
+    <div class="quick-bar">
+      <span style="color: #64748b; font-size:12px;">快速直达:</span>
+      <a class="quick-link" href="https://orikami048.github.io/real-fengshui-db/" target="_blank">🧭 风水罗盘</a>
+      <span style="color:#334155;">|</span>
+      <a class="quick-link" href="https://ziwei-doushu-d4e.pages.dev" target="_blank">🔮 紫微斗数</a>
+      <span style="color:#334155;">|</span>
+      <a class="quick-link" href="https://bazi-liuyao-database.pages.dev" target="_blank">📜 四柱八字</a>
+      <span style="color:#334155;">|</span>
+      <a class="quick-link" href="https://fangji-2oh.pages.dev/" target="_blank">🌿 汉唐方剂</a>
+    </div>
+  </div>
+
+  <!-- 统一页脚 -->
+  <footer>
+    <p>传承国学经典智慧 · 结合现代科学与空间规划 · 仅供学习与学术研究参考</p>
+  </footer>
+
+</body>
 </html>
